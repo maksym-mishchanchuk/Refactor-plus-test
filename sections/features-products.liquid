@@ -1,0 +1,38 @@
+{% schema %}
+{
+  "name": "Featured Products",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select a collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="featured-products">
+  <h2>Featured products</h2>
+  <div class="featured-products__list">
+    {% if section.settings.collection %}
+      {% for product in section.settings.collection.products %}
+        <div class="featured-products__item">
+          <a href="{{ product.url }}">
+            <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
+          </a>
+          <h3>{{ product.title }}</h3>
+          <p>{{ product.price | money }}</p>
+          <button class="add-to-cart" data-product-id="{{ product.id }}">Add to cart</button>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No collection selected.</p>
+    {% endif %}
+  </div>
+</section>
