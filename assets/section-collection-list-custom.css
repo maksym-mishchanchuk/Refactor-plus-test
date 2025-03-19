@@ -19,14 +19,8 @@
   }
 }
 .featured-products {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
-}
-@media (min-width: 1024px) {
-  .featured-products {
-    padding-left: 50px;
-    padding-right: 50px;
-  }
 }
 .featured-products__button-container {
   display: flex;
@@ -45,6 +39,8 @@
     column-gap: 40px;
     row-gap: 119px;
     padding-bottom: 147px;
+    padding-left: 50px;
+    padding-right: 50px;
   }
 }
 .featured-products__item {
