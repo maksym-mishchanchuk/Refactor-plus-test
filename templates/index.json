@@ -117,7 +117,7 @@
     "features-products": {
       "type": "features-products",
       "settings": {
-        "collection": "features-products"
+        "collection": "new-products"
       }
     },
     "collage": {
