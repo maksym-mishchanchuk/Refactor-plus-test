@@ -20,7 +20,7 @@
 {% endschema %}
 
 <section class="featured-products">
-  <h2  class="featured-header">Featured products</h2>
+  <h2 class="featured-header">Featured products</h2>
   <div class="featured-products__list">
     {% if section.settings.collection %}
       {% for product in section.settings.collection.products %}
@@ -30,7 +30,9 @@
           </a>
           <div class="featured-products__button-container">
             <p class="featured-products__item-text">{{ product.title }}</p>
-            <button class="add-to-cart" data-product-id="{{ product.id }}">Add to cart - {{ product.price | money }}</button>
+            <button class="add-to-cart" data-product-id="{{ product.selected_or_first_available_variant.id }}">
+              Add to cart - {{ product.price | money }}
+            </button>
           </div>
         </div>
       {% endfor %}
@@ -39,3 +41,51 @@
     {% endif %}
   </div>
 </section>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".add-to-cart").forEach(button => {
+      button.addEventListener("click", async function () {
+        let productId = this.dataset.productId;
+
+        try {
+          let response = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: productId, quantity: 1 })
+          });
+
+          if (!response.ok) throw new Error("❌ Unable to add product!");
+
+          let data = await response.json();
+          console.log("✅ Додано в кошик:", data);
+
+          let cartResponse = await fetch('/cart.js');
+          let cart = await cartResponse.json();
+          let cartCount = document.querySelector(".cart-count-bubble");
+
+          if (cartCount) {
+            cartCount.innerText = cart.item_count;
+          }
+
+          let cartNotification = document.getElementById("cart-notification");
+          if (cartNotification) {
+            cartNotification.classList.add("active");
+
+            setTimeout(() => {
+              cartNotification.classList.remove("active");
+            }, 5000);
+          }
+        } catch (error) {
+          console.error(error);
+          alert("Error!");
+        }
+      });
+    });
+  });
+</script>
+
+
+
+

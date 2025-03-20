@@ -54,6 +54,12 @@
     padding-bottom: 0;
   }
 }
+.featured-products__item-link {
+  transition: transform 0.3s ease-in-out;
+}
+.featured-products__item-link:hover {
+  transform: scale(1.01);
+}
 .featured-products__item-img {
   width: 100%;
 }
@@ -77,4 +83,9 @@
   background: #464B90;
   text-align: center;
   color: #fff;
+  transition: box-shadow 0.3s ease-in-out;
+}
+.add-to-cart:hover {
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
 }
